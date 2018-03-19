@@ -24,3 +24,23 @@ dataset_dict = {
 }
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
+
+# AlexNet Network Definition
+def alex_net(batch_size, patch_size, depth, hidden_size, data):
+
+    # We'll be using this variables frequently
+    image_size = data["image_size"]
+    num_labels = data["num_labels"]
+    num_channels = data["num_channels"]
+
+    # Create the tensorflow graph
+    graph = tf.Graph()
+
+    with graph.as_default():
+        '''
+            as_default() is the method that creates a context manager object corresponding to
+            what you got out of "tf.Graph" That context manager pushes new Graph instance to
+            thread-local stack so that all new TensorFlow ops are created for that graph.
+        '''
+
+        
