@@ -26,12 +26,16 @@ dataset_dict = {
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
 
-def create_conv_layer(data, num_channels, depth, filter_shape, pool_shape, name):
+def create_conv_layer(data, num_channels, num_filters, filter_shape, pool_shape, name):
     '''
         Generates a new convolutional layer with the given parameters.
     '''
 
     # Define the filter window shape
-    filter_window_shape = [filter_shape[0], filter_shape[1], num_channels, depth]
+    filter_window_shape = [filter_shape[0], filter_shape[1], num_channels, num_filters]
+
+    # Set initial weights and biases for the filter
+    weights = tf.Variable(tf.truncated_normal(filter_window_shape), stddev=0.1, name=name + '_W')
+    biases = tf.Variable(tf.truncated_normal(num_filters), stddev=0.1, name=name + '_b')
 
     
