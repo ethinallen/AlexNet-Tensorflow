@@ -15,6 +15,7 @@ BATCH_SIZE = 128
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.0005
 DROPOUT_KEEP_PROB = 0.5
+FC_HIDDEN_SIZE = 4096
 
 # Global dataset dictionary
 dataset_dict = {
@@ -43,4 +44,30 @@ def alex_net(batch_size, patch_size, depth, hidden_size, data):
             thread-local stack so that all new TensorFlow ops are created for that graph.
         '''
 
-        
+        # Define the input placeholder
+        net_input = tf.placeholder(tf.float32, shape = (batch_size, image_size, image_size, num_channels))
+
+        # Define the output placeholder
+        net_output = tf.placeholder(tf.float32, shape = (batch_size, num_labels))
+
+        # Define different layers weights and biases
+        conv1_weights = tf.Variable(tf.truncated_normal([patch_size, patch_size, num_channels, depth]), stddev = 0.1)
+        conv1_biases = tf.Variable(tf.Zeros([depth]))
+
+        conv2_weights = 
+        conv2_biases =
+
+        conv3_weights =
+        conv3_biases =
+
+        conv4_weights =
+        conv4_biases =
+
+        fc1_weights =
+        fc1_biases =
+
+        fc2_weights =
+        fc2_biases =
+
+        fc3_weights =
+        fc3_biases =
