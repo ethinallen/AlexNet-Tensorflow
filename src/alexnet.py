@@ -44,25 +44,25 @@ fc_connection_shapes = {
 
 # Weights for each layer
 conv_weights = {
-    "c1_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"]), name="c1_weights")
-    "c2_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"]), name="c2_weights") 
-    "c3_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"]), name="c3_weights")
-    "c4_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"]), name="c4_weights")
-    "c5_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"]), name="c5_weights")
-    "f1_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f1_shape"]), name="f1_weights")
-    "f2_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f2_shape"]), name="f2_weights")
+    "c1_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"]), name="c1_weights"),
+    "c2_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"]), name="c2_weights"),
+    "c3_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"]), name="c3_weights"),
+    "c4_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"]), name="c4_weights"),
+    "c5_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"]), name="c5_weights"),
+    "f1_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f1_shape"]), name="f1_weights"),
+    "f2_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f2_shape"]), name="f2_weights"),
     "f3_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f3_shape"]), name="f3_weights")
 }
 
 # Biases for each layer
 conv_biases = {
-    "c1_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"][3]), name="c1_biases")
-    "c2_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"][3]), name="c2_biases") 
-    "c3_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"][3]), name="c3_biases")
-    "c4_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"][3]), name="c4_biases")
-    "c5_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"][3]), name="c5_biases")
-    "f1_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f1_shape"][3]), name="f1_biases")
-    "f2_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f2_shape"][3]), name="f2_biases")
+    "c1_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"][3]), name="c1_biases"),
+    "c2_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"][3]), name="c2_biases"), 
+    "c3_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"][3]), name="c3_biases"),
+    "c4_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"][3]), name="c4_biases"),
+    "c5_biases": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"][3]), name="c5_biases"),
+    "f1_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f1_shape"][3]), name="f1_biases"),
+    "f2_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f2_shape"][3]), name="f2_biases"),
     "f3_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f3_shape"][3]), name="f3_biases")
 }
 
@@ -77,11 +77,15 @@ labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
 c_layer_1 = tf.nn.conv2d(img_4d_shaped, conv_weights["c1_weights"], strides=[1, 4, 4, 1], padding="SAME", name="c_layer_1")
 c_layer_1 += conv_biases["c1_biases"]
 c_layer_1 = tf.nn.relu(c_layer_1)
-c_layer_1 = tf.nn.lrn(depth_radius=4.5, bias=1.8, alpha=1e-4, beta=0.75)
+c_layer_1 = tf.nn.lrn(c_layer_1, depth_radius=4.5, bias=1.8, alpha=1e-4, beta=0.75)
 c_layer_1 = tf.nn.max_pool(c_layer_1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1], padding="VALID")
 
 # Convolution Layer 2 | Response Normalization | Max Pooling | ReLU
-
+c_layer_2 = tf.nn.conv2d(c_layer_1, conv_weights["c2_weights"], strides=[1, 1, 1, 1], padding="SAME", name="c_layer_2")
+c_layer_2 += conv_biases["c2_biases"]
+c_layer_2 = tf.nn.relu(c_layer_2)
+c_layer_2 = tf.nn.lrn(c_layer_2, depth_radius=4.5, bias=1.8, alpha=1e-4, beta=0.75)
+c_layer_2 = tf.nn.max_pool(c_layer_2, ksize=[1, 3, 3, 1], strides=[1, 1, 1, 1], padding="VALID")
 
 # Convolution Layer 3 | ReLU
 
