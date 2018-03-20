@@ -35,22 +35,23 @@ conv_filter_shapes = {
     "c5_filter": [3, 3, 192, 256]
 }
 
+# Fully connected shapes
 fc_connection_shapes = {
-    "fc1_shape": [13*13*256, 4096] 
-    "fc2_shape": [4096, 4096]
-    "fc3_shape": [4096, dataset_dict["num_labels"]]
+    "f1_shape": [13*13*256, 4096],
+    "f2_shape": [4096, 4096],
+    "f3_shape": [4096, dataset_dict["num_labels"]]
 }
 
-# Global parameters for each layer
+# Weights for each layer
 conv_weights = {
     "c1_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"]), name="c1_weights")
     "c2_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"]), name="c2_weights") 
     "c3_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"]), name="c3_weights")
     "c4_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"]), name="c4_weights")
     "c5_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"]), name="c5_weights")
-    "f1_weights": tf.Variable(tf.truncated_normal())
-    "f2_weights":
-    "f3_weights":
+    "f1_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f1_shape"]), name="f1_weights")
+    "f2_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f2_shape"]), name="f2_weights")
+    "f3_weights": tf.Variable(tf.truncated_normal(fc_connection_shapes["f3_shape"]), name="f3_weights")
 }
 
 conv_biases = {
