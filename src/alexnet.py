@@ -30,8 +30,6 @@ dataset_dict = {
     "image_size": 224,
     "num_channels": 3,
     "num_labels": 1000,
-    "filter_shape": [5, 5],
-    "pool_shape": [2, 2]
 }
 
 # Filter shapes for each layer 
@@ -110,6 +108,9 @@ c_layer_5 = tf.nn.conv2d(c_layer_4, conv_weights["c5_weights"], strides=[1, 1, 1
 c_layer_5 += conv_biases["c5_biases"]
 c_layer_5 = tf.nn.relu(c_layer_5)
 c_layer_5 = tf.nn.max_pool(c_layer_5, ksize=[1, 3, 3, 1], strides=[1, 1, 1, 1], padding="VALID")
+
+# Flatten the multi-dimensional outputs to feed fully connected layers
+feature_map = tf.reshape(c_layer_5, [-1, 13, 13, 256])
 
 # Fully Connected Layer 1 | Dropout
 
