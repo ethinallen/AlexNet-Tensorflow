@@ -21,16 +21,34 @@ FC_HIDDEN_SIZE = 4096
 dataset_dict = {
     "image_size": 224,
     "num_channels": 3,
-    "num_labels": 22000,
+    "num_labels": 1000,
     "filter_shape": [5, 5],
     "pool_shape": [2, 2]
+}
+
+# Filter shapes for each layer 
+conv_filter_shapes = {
+    "c1_filter": [11, 11, 3, 96],
+    "c2_filter": [5, 5, 48, 256],
+    "c3_filter": [3, 3, 256, 384],
+    "c4_filter": [3, 3, 192, 384],
+    "c5_filter": [3, 3, 192, 256]
+}
+
+# Global parameters for each layer
+conv_weights_params = {
+    "c1_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"]), name="c1_weights")
+    "": 
+    "weights_3":
+    "weights_4":
+    "weights_5":
 }
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
 
 # Declare the input and output placeholders
 train = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
-train_4d_shaped = tf.reshape(train, [-1, 224, 224, 3])
+train_4d_shaped = tf.reshape(train, [-1, dataset_dict["image_size"], dataset_dict["image_size"], 3])
 labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
 
 def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool_shape, name):
@@ -69,3 +87,5 @@ c_layer_2 = create_conv_layer(c_layer_1, 32, 64, dataset_dict["filter_shape"], d
 c_layer_3 = create_conv_layer(c_layer_2, 64, 128, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_3')
 c_layer_4 = create_conv_layer(c_layer_3, 128, 256, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_4')
 c_layer_5 = create_conv_layer(c_layer_4, 256, 512, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_5')
+
+# CONV_LAYER_1 | 
