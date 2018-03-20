@@ -88,10 +88,14 @@ c_layer_2 = tf.nn.lrn(c_layer_2, depth_radius=4.5, bias=1.8, alpha=1e-4, beta=0.
 c_layer_2 = tf.nn.max_pool(c_layer_2, ksize=[1, 3, 3, 1], strides=[1, 1, 1, 1], padding="VALID")
 
 # Convolution Layer 3 | ReLU
-
+c_layer_3 = tf.nn.conv2d(c_layer_2, conv_weights["c3_weights"], strides=[1, 1, 1, 1], padding="SAME", name="c_layer_3")
+c_layer_3 += conv_biases["c3_biases"]
+c_layer_3 = tf.nn.relu(c_layer_3)
 
 # Convolution Layer 4 | ReLU
-
+c_layer_4 = tf.nn.conv2d(c_layer_3, conv_weights["c4_weights"], strides=[1, 1, 1, 1], padding="SAME", name="c_layer_4")
+c_layer_4 += conv_biases["c4_biases"]
+c_layer_4 = tf.nn.relu(c_layer_4)
 
 # Convolution Layer 5 | ReLU | Max Pooling
 
