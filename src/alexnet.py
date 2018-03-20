@@ -8,6 +8,10 @@
 """
     Implementation of the AlexNet Convolutional Neural Network Architecture
     Using Tensorflow.
+
+    Paper: ImageNet Classification with Deep Convolutional Neural Networks
+
+    Authors: Krizhevsky, Alex - Sutskever, Ilya - Hinton, Geoffrey E
 """
 import tensorflow as tf
 # General parameters of the model
@@ -98,6 +102,10 @@ c_layer_4 += conv_biases["c4_biases"]
 c_layer_4 = tf.nn.relu(c_layer_4)
 
 # Convolution Layer 5 | ReLU | Max Pooling
+c_layer_5 = tf.nn.conv2d(c_layer_4, conv_weights["c5_weights"], strides=[1, 1, 1, 1], padding="SAME", name="c_layer_5")
+c_layer_5 += conv_biases["c5_biases"]
+c_layer_5 = tf.nn.relu(c_layer_5)
+c_layer_5 = tf.nn.max_pool(c_layer_5, ksize=[1, 3, 3, 1], strides=[1, 1, 1, 1], padding="VALID")
 
 # Fully Connected Layer 1 | Dropout
 
