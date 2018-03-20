@@ -22,11 +22,13 @@ dataset_dict = {
     "image_size": 224,
     "num_channels": 3,
     "num_labels": 22000,
+    "filter_shape": [5, 5],
+    "pool_shape": [2, 2]
 }
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
 
-def create_conv_layer(data, num_channels, num_filters, filter_shape, pool_shape, name):
+def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool_shape, name):
     '''
         Generates a new convolutional layer with the given parameters.
     '''
@@ -39,7 +41,7 @@ def create_conv_layer(data, num_channels, num_filters, filter_shape, pool_shape,
     filter_biases = tf.Variable(tf.truncated_normal(num_filters), name=name + '_b')
 
     # Create the main convoloutional layer
-    conv_layer = tf.nn.conv2d(data, filter=filter_weights, strides=[1, 1, 1, 1], padding='SAME', name='CONV_1')
+    conv_layer = tf.nn.conv2d(input_shape, filter=filter_weights, strides=[1, 1, 1, 1], padding='SAME', name='CONV_1')
 
     # Add biases to the filter weights
     conv_layer += filter_biases
@@ -50,7 +52,15 @@ def create_conv_layer(data, num_channels, num_filters, filter_shape, pool_shape,
     # Max pooling layer
     ksize = [1, pool_shape[0], pool_shape[1], 1]       # Pooling window size | first & last args are always set to 1
     strides = [1, 2, 2, 1]
-    conv_layer = tf.nn.max_pool(value=data, ksize=ksize, strides=strides, padding='SAME', name='MAX_POOL_1')
+    conv_layer = tf.nn.max_pool(value=input_shape, ksize=ksize, strides=strides, padding='SAME', name='MAX_POOL_1')
 
+    # Return the sub-graph
     return conv_layer
 
+
+# Generate 5 convolutional layers
+c_layer_1 = create_conv_layer(x_shaped, 3, 32, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_1')
+c_layer_2 = create_conv_layer(c_layer_1, 3, 64, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_2')
+c_layer_3 = create_conv_layer(c_layer_2, 3, 128, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_3')
+c_layer_4 = create_conv_layer(c_layer_3, 3, 256, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_4')
+c_layer_5 = create_conv_layer(c_layer_4, 3, 512, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_5')
