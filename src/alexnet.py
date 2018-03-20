@@ -73,6 +73,30 @@ input_img = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_si
 img_4d_shaped = tf.reshape(input_img, [-1, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
 labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
 
+# Define the model layers
+# Convolution Layer 1 | Response Normalization | Max Pooling | ReLU
+
+
+# Convolution Layer 2 | Response Normalization | Max Pooling | ReLU
+
+
+# Convolution Layer 3 | ReLU
+
+
+# Convolution Layer 4 | ReLU
+
+
+# Convolution Layer 5 | ReLU | Max Pooling
+
+# Fully Connected Layer 1 | Dropout
+
+
+# Fully Connected Layer 2 | Dropout
+
+
+# Fully Connected Layer 3 | Softmax
+
+
 def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool_shape, name):
     '''
         Generates a new convolutional layer with the given parameters.
