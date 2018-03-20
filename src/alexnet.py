@@ -113,9 +113,13 @@ c_layer_5 = tf.nn.max_pool(c_layer_5, ksize=[1, 3, 3, 1], strides=[1, 1, 1, 1], 
 feature_map = tf.reshape(c_layer_5, [-1, 13, 13, 256])
 
 # Fully Connected Layer 1 | Dropout
-
+fc_layer_1 = tf.matmul(feature_map, conv_weights["f1_weights"]) + conv_biases["f1_biases"]
+fc_layer_1 = tf.nn.dropout(fc_layer_1, keep_prob=DROPOUT_KEEP_PROB)
 
 # Fully Connected Layer 2 | Dropout
-
+fc_layer_2 = tf.matmul(fc_layer_1, conv_weights["f2_weights"]) + conv_biases["f2_biases"]
+fc_layer_2 = tf.nn.dropout(fc_layer_2, keep_prob=DROPOUT_KEEP_PROB)
 
 # Fully Connected Layer 3 | Softmax
+fc_layer_3 = tf.matmul(fc_layer_2, conv_weights["f3_weights"]) + conv_biases["f3_biases"]
+cnn_output = tf.nn.softmax(fc_layer_3)
