@@ -28,8 +28,9 @@ dataset_dict = {
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
 
-# Define the input and output placeholders
+# Declare the input and output placeholders
 train = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
+train_4d_shaped = tf.reshape(train, [-1, 224, 224, 3])
 labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
 
 def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool_shape, name):
@@ -63,7 +64,7 @@ def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool
 
 
 # Generate 5 convolutional layers
-c_layer_1 = create_conv_layer(x_shaped, 3, 32, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_1')
+c_layer_1 = create_conv_layer(train_4d_shaped, 3, 32, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_1')
 c_layer_2 = create_conv_layer(c_layer_1, 3, 64, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_2')
 c_layer_3 = create_conv_layer(c_layer_2, 3, 128, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_3')
 c_layer_4 = create_conv_layer(c_layer_3, 3, 256, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_4')
