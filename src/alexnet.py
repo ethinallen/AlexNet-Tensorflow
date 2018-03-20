@@ -52,3 +52,5 @@ def create_conv_layer(data, num_channels, num_filters, filter_shape, pool_shape,
     strides = [1, 2, 2, 1]
     conv_layer = tf.nn.max_pool(value=data, ksize=ksize, strides=strides, padding='SAME', name='MAX_POOL_1')
 
+    return conv_layer
+
