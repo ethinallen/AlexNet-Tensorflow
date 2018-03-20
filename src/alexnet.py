@@ -28,6 +28,10 @@ dataset_dict = {
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
 
+# Define the input and output placeholders
+train = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
+labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
+
 def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool_shape, name):
     '''
         Generates a new convolutional layer with the given parameters.
