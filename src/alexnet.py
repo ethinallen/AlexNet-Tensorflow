@@ -65,7 +65,7 @@ def create_conv_layer(input_shape, num_channels, num_filters, filter_shape, pool
 
 # Generate 5 convolutional layers
 c_layer_1 = create_conv_layer(train_4d_shaped, 3, 32, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_1')
-c_layer_2 = create_conv_layer(c_layer_1, 3, 64, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_2')
-c_layer_3 = create_conv_layer(c_layer_2, 3, 128, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_3')
-c_layer_4 = create_conv_layer(c_layer_3, 3, 256, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_4')
-c_layer_5 = create_conv_layer(c_layer_4, 3, 512, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_5')
+c_layer_2 = create_conv_layer(c_layer_1, 32, 64, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_2')
+c_layer_3 = create_conv_layer(c_layer_2, 64, 128, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_3')
+c_layer_4 = create_conv_layer(c_layer_3, 128, 256, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_4')
+c_layer_5 = create_conv_layer(c_layer_4, 256, 512, dataset_dict["filter_shape"], dataset_dict["pool_shape"], name='c_layer_5')
