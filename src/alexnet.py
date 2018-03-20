@@ -73,9 +73,12 @@ input_img = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_si
 img_4d_shaped = tf.reshape(input_img, [-1, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
 labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
 
-# Define the model layers
 # Convolution Layer 1 | Response Normalization | Max Pooling | ReLU
-
+c_layer_1 = tf.nn.conv2d(img_4d_shaped, conv_weights["c1_weights"], strides=[1, 4, 4, 1], padding="SAME", name="c_layer_1")
+c_layer_1 += conv_biases["c1_biases"]
+c_layer_1 = tf.nn.relu(c_layer_1)
+c_layer_1 = tf.nn.lrn(depth_radius=4.5, bias=1.8, alpha=1e-4, beta=0.75)
+c_layer_1 = tf.nn.max_pool(c_layer_1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1], padding="VALID")
 
 # Convolution Layer 2 | Response Normalization | Max Pooling | ReLU
 
