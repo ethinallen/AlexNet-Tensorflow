@@ -35,13 +35,26 @@ conv_filter_shapes = {
     "c5_filter": [3, 3, 192, 256]
 }
 
+fc_connection_shapes = {
+    "fc1_shape": [13*13*256, 4096] 
+    "fc2_shape": [4096, 4096]
+    "fc3_shape": [4096, dataset_dict["num_labels"]]
+}
+
 # Global parameters for each layer
-conv_weights_params = {
+conv_weights = {
     "c1_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c1_filter"]), name="c1_weights")
-    "": 
-    "weights_3":
-    "weights_4":
-    "weights_5":
+    "c2_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c2_filter"]), name="c2_weights") 
+    "c3_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c3_filter"]), name="c3_weights")
+    "c4_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c4_filter"]), name="c4_weights")
+    "c5_weights": tf.Variable(tf.truncated_normal(conv_filter_shapes["c5_filter"]), name="c5_weights")
+    "f1_weights": tf.Variable(tf.truncated_normal())
+    "f2_weights":
+    "f3_weights":
+}
+
+conv_biases = {
+    "c1"
 }
 
 dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
