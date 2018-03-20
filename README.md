@@ -34,6 +34,15 @@ The capacity of an excited neuron to reduce the activity of its neighbours.
 
 They are used to summarize the outputs of neighbouring group of neurons in the same kernel map. If **S** is the number of **pooling pixels** and the  **neighbourhoods** are **z*z**:
 
-- **Local Pooling (s = z)**
+```javascript
+Local Pooling (s = z)
+Overlapped Pooling (s < z): Less overfitting.
+```
 
-- **Overlapped Pooling (s < z)**: Less overfitting.
+## Dropout
+
+With dropout, we'll set the output of each hidden neuron to 0 with some given probability. So, every time an input is presented the neural network samples a different architecture but, all these architectures are sharing the weights. Using dropout, we'll have less **neuron co-adaptations**. Dropout **increases** the convergence time. Dropout is used in the first two fully connected layers.
+
+## Fully Connected Layers
+
+Fully-connected layers perform **high-level reasoning**. This is used to learn **non-linear** relationships between features. We use **FC Layers** to transform an **invariance feature space** to a **hypothesis learning problem**.
