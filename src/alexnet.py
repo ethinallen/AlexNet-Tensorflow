@@ -28,12 +28,14 @@ class alex_net:
     ALPHA = 1e-4
     BETA = 0.75
 
-    # Global dataset dictionary
-    dataset_dict = {
-        "image_size": 200,
-        "num_channels": 3,
-        "num_labels": 1000,
-    }
+    def __init___(self, image_size, num_channels, num_labels):
+
+        # Global dataset dictionary
+        dataset_dict = {
+            "image_size": image_size,
+            "num_channels": num_channels,
+            "num_labels": num_labels,
+        }
 
     # Filter shapes for each layer
     conv_filter_shapes = {
