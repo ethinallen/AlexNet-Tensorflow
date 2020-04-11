@@ -31,7 +31,7 @@ class alex_net:
     def __init___(self, image_size, num_channels, num_labels):
 
         # Global dataset dictionary
-        dataset_dict = {
+        self.dataset_dict = {
             "image_size": image_size,
             "num_channels": num_channels,
             "num_labels": num_labels,
@@ -50,7 +50,7 @@ class alex_net:
     fc_connection_shapes = {
         "f1_shape": [13*13*256, 4096],
         "f2_shape": [4096, 4096],
-        "f3_shape": [4096, dataset_dict["num_labels"]]
+        "f3_shape": [4096, self.dataset_dict["num_labels"]]
     }
 
     # Weights for each layer
@@ -77,12 +77,12 @@ class alex_net:
         "f3_biases": tf.Variable(tf.truncated_normal(fc_connection_shapes["f3_shape"][3]), name="f3_biases")
     }
 
-    dataset_dict["total_image_size"] = dataset_dict["image_size"] * dataset_dict["image_size"]
+    self.dataset_dict["total_image_size"] = self.dataset_dict["image_size"] * self.dataset_dict["image_size"]
 
     # Declare the input and output placeholders
-    input_img = tf.placeholder(tf.float32, shape=[BATCH_SIZE, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
-    img_4d_shaped = tf.reshape(input_img, [-1, dataset_dict["image_size"], dataset_dict["image_size"], dataset_dict["num_channels"]])
-    labels = tf.placeholder(tf.float32, shape=[None, dataset_dict["num_labels"]])
+    input_img = tf.placeholder(tf.float32, shape=[BATCH_SIZE, self.dataset_dict["image_size"], self.dataset_dict["image_size"], self.dataset_dict["num_channels"]])
+    img_4d_shaped = tf.reshape(input_img, [-1, self.dataset_dict["image_size"], self.dataset_dict["image_size"], self.dataset_dict["num_channels"]])
+    labels = tf.placeholder(tf.float32, shape=[None, self.dataset_dict["num_labels"]])
 
     # Convolution Layer 1 | Response Normalization | Max Pooling | ReLU
     c_layer_1 = tf.nn.conv2d(img_4d_shaped, conv_weights["c1_weights"], strides=[1, 4, 4, 1], padding="SAME", name="c_layer_1")
